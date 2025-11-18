@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="container mt-5">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary fw-bold">@ViewData["Title"]</h1>
+        <p class="lead text-secondary">
+            Your privacy is very important to us. This page explains how we handle your data.
+        </p>
+    </div>
+
+    <!-- Card Layout -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body">
+                    <h4 class="card-title text-success">Information We Collect</h4>
+                    <p class="card-text">
+                        We collect personal details such as name, email, and contact information when you register
+                        or interact with our services. This helps us provide a more personalized experience.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body">
+                    <h4 class="card-title text-info">How We Use Information</h4>
+                    <p class="card-text">
+                        The information collected is used to improve our services, personalize user experiences,
+                        process transactions, and keep you updated with important notifications.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Divider -->
+    <hr class="my-5 border-primary" />
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body">
+                    <h4 class="card-title text-warning">Data Protection</h4>
+                    <p class="card-text">
+                        We adopt the best practices to ensure your data is secure. Encryption and strict access
+                        policies are in place to protect your personal information.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4 h-100 bg-light">
+                <div class="card-body">
+                    <h4 class="card-title text-danger">Cookies Policy</h4>
+                    <p class="card-text">
+                        Our site uses cookies to enhance your browsing experience. You may choose to disable cookies
+                        through your browser settings at any time.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- About Button -->
+        <a asp-controller="Pages" asp-action="About" class="btn btn-gradient px-4 py-2 rounded-pill shadow-lg mt-3">
+            About Me
+        </a>
+        <!-- Home Button -->
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill shadow-lg mt-3">
+            🏠 Back to Home
+        </a>
+    </div>
+  
+    <!-- Footer Section -->
+    <div class="text-center mt-5">
+        <p class="text-muted small">
+            If you have any questions about our privacy practices, feel free to contact us at
+            <a href="mailto:support@yourdomain.com" class="text-decoration-none fw-bold text-primary">
+                support@yourdomain.com
+            </a>.
+        </p>
+
+    </div>
+</div>
+
+<!-- Custom Button Style -->
+<style>
+    .btn-gradient {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: white;
+        font-weight: bold;
+        border: none;
+        transition: 0.3s;
+    }
+
+        .btn-gradient:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            transform: scale(1.05);
+        }
+</style>

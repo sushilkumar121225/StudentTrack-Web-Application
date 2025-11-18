@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Manage Files";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-secondary mb-4">📂 Files</h2>
+    <a href="#fileForm" class="btn btn-success mb-3">➕ Upload File</a>
+
+    <div class="table-responsive shadow rounded mb-5">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-secondary">
+                <tr>
+                    <th>ID</th>
+                    <th>File Name</th>
+                    <th>Course</th>
+                    <th>File Type</th>
+                    <th>Uploaded By</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>MathNotes.pdf</td>
+                    <td>B.Tech</td>
+                    <td>Notice for Student</td>
+                    <td>John Doe</td>
+                    <td>10-Oct-2025</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="#">Download</a>
+                        <a class="btn btn-sm btn-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-5">
+
+    <h3 class="fw-bold text-primary mb-4" id="fileForm">➕ Upload / Edit File</h3>
+    <form method="post" enctype="multipart/form-data" class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">File Name</label>
+            <input type="text" class="form-control" name="FileName" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Course</label>
+            <select class="form-select" name="Course" required>
+                <option value="">Select Course</option>
+                <option>B.Tech</option>
+                <option>Management</option>
+                <option>Law</option>
+                <option>Science</option>
+                <option>Arts</option>
+                <option>Nursing</option>
+                <option>All</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">File Type</label>
+            <select class="form-select" name="FileType" required>
+                <option value="">Select File Type</option>
+                <option>Notice for Teacher</option>
+                <option>Notice for Student</option>
+                <option>Notice for All</option>
+                <option>Event</option>
+                <option>Exam</option>
+                <option>Function</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Upload File</label>
+            <input type="file" class="form-control" name="FileUpload" required>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Uploaded By</label>
+            <input type="text" class="form-control" name="UploadedBy" required>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-control" name="Date" required>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary">Save File</button>
+        </div>
+    </form>
+</div>

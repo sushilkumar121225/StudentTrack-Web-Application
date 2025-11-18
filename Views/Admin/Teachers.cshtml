@@ -1,0 +1,182 @@
+﻿@{
+    ViewData["Title"] = "Manage Teachers";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-success mb-4">👨‍🏫 Teachers</h2>
+    <a href="/Admin/AddTeacher" class="btn btn-success mb-3">➕ Add Teacher</a>
+
+    <!-- Teachers Table -->
+    <div class="table-responsive shadow rounded">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-success">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>DOB</th>
+                    <th>Qualification</th>
+                    <th>Program</th>
+                    <th>Department</th>
+                    <th>Experience (Years)</th>
+                    <th>Address</th>
+                    <th>Office Location</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Jane Smith</td>
+                    <td>Female</td>
+                    <td>jane@example.com</td>
+                    <td>9876543210</td>
+                    <td>1990-05-12</td>
+                    <td>M.Sc</td>
+                    <td>B.Tech</td>
+                    <td>CE</td>
+                    <td>5</td>
+                    <td>123 Main Street</td>
+                    <td>Room 204, C-Block</td>
+                    <td>janesmith</td>
+                    <td>******</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="#">Edit</a>
+                        <a class="btn btn-sm btn-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- Add / Edit Teacher Form -->
+    <h3 class="fw-bold text-primary mb-4">➕ Add / Edit Teacher</h3>
+    <form method="post" class="row g-3">
+
+        <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="Name" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label d-block">Gender</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Gender" id="genderMale" value="Male" required>
+                <label class="form-check-label" for="genderMale">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Gender" id="genderFemale" value="Female">
+                <label class="form-check-label" for="genderFemale">Female</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Gender" id="genderOther" value="Other">
+                <label class="form-check-label" for="genderOther">Other</label>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Contact Number</label>
+            <input type="text" class="form-control" name="Contact" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="Email" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" name="DOB" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Qualification</label>
+            <input type="text" class="form-control" name="Qualification" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Program</label>
+            <select class="form-select" id="programSelect" name="Program" required>
+                <option value="">Select Program</option>
+                <option>B.Tech</option>
+                <option>Management</option>
+                <option>LAW</option>
+                <option>Science</option>
+                <option>Arts</option>
+                <option>Nursing</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Department</label>
+            <select class="form-select" id="departmentSelect" name="Department" required>
+                <option value="">Select Department</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Teaching Experience (Years)</label>
+            <input type="number" min="0" class="form-control" name="Experience" required>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Address</label>
+            <textarea class="form-control" name="Address" rows="2" required></textarea>
+        </div>
+
+        <!-- ✅ New Field Added -->
+        <div class="col-md-6">
+            <label class="form-label">Office Location</label>
+            <input type="text" class="form-control" name="OfficeLocation" placeholder="e.g., MC 204, C-Block" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" name="Username" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" name="Password" required>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary">Save Teacher</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        const departments = {
+            "B.Tech": ["CE", "CE-AI", "IT", "EE", "Civil", "Chemical", "ME", "Bioinfo"],
+            "Management": ["Business Administration", "Finance & Accounting", "Marketing & Sales", "Entrepreneurship"],
+            "LAW": ["Constitutional Law", "Civil Law", "International Law", "IPR", "Environmental Law"],
+            "Science": ["Physics", "Chemistry", "Mathematics", "Biotechnology", "Environmental Science"],
+            "Arts": ["English / Literature", "History", "Political Science", "Sociology", "Psychology", "Performing Arts"],
+            "Nursing": ["General Nursing", "B.Sc Nursing", "M.Sc Nursing", "Community Health Nursing"]
+        };
+
+        const programSelect = document.getElementById("programSelect");
+        const departmentSelect = document.getElementById("departmentSelect");
+
+        programSelect.addEventListener("change", function () {
+            const selectedProgram = this.value;
+            departmentSelect.innerHTML = '<option value="">Select Department</option>';
+            if (departments[selectedProgram]) {
+                departments[selectedProgram].forEach(dep => {
+                    const option = document.createElement("option");
+                    option.value = dep;
+                    option.text = dep;
+                    departmentSelect.appendChild(option);
+                });
+            }
+        });
+    </script>
+}

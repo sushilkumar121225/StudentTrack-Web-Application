@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Teacher Profile";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-primary">My Profile</h2>
+    <div class="card shadow p-4 mt-3">
+        <p><strong>Name:</strong> @User.Identity.Name</p>
+        <p><strong>Email:</strong> teacher@example.com</p>
+        <p><strong>Role:</strong> Teacher</p>
+        <p><strong>Joined:</strong> 01-Jan-2025</p>
+        <a href="/Teacher/Dashboard" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+    </div>
+</div>

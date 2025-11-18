@@ -1,0 +1,104 @@
+﻿@model StudentTrack.ViewModels.ContactUsViewModel
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">📞 Contact Us</h1>
+        <p class="lead text-muted">We’d love to hear from you!</p>
+    </div>
+
+    <div class="row">
+        <!-- Contact Form -->
+        <div class="col-md-6 mb-4">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form asp-action="ContactUs" method="post" class="p-4 shadow rounded bg-light">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter your name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Message" class="form-label"></label>
+                    <textarea asp-for="Message" class="form-control" rows="4" placeholder="Write your message..."></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Send Message</button>
+            </form>
+
+            <!-- Success & Error Sounds -->
+            <audio id="successSound" src="~/sounds/s2.mp3" preload="auto"></audio>
+            <audio id="errorSound" src="~/sounds/e1.mp3" preload="auto"></audio>
+        </div>
+
+        <!-- Location -->
+        <div class="col-md-6">
+            <h4 class="fw-bold text-success">📍 Our Location</h4>
+            <p>StudentTrack , Aurangabad (Over Bridge), Bihar, India</p>
+            <iframe class="rounded shadow"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2392.0511712140014!2d84.35621007304297!3d24.74533954985882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398cfd836ff3e595%3A0xc519059056913a11!2sAurangabad%20Bus%20Stand!5e1!3m2!1sen!2sin!4v1757183404383!5m2!1sen!2sin"
+                    width="600" height="320" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <!-- Privacy Button -->
+        <a asp-controller="Pages" asp-action="Privacy" class="btn btn-success px-4 py-2 rounded-pill shadow-lg mt-3">
+            See Privacy
+        </a>
+
+        <!-- Home Button -->
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill shadow-lg mt-3">
+            🏠 Back to Home
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const form = document.querySelector('form');
+        const successSound = document.getElementById('successSound');
+        const errorSound = document.getElementById('errorSound');
+
+        form.addEventListener('submit', function (event) {
+            const name = document.querySelector('[name="Name"]').value.trim();
+            const email = document.querySelector('[name="Email"]').value.trim();
+            const message = document.querySelector('[name="Message"]').value.trim();
+
+            
+
+            // Client-side validation
+            if (name !== '' && emailPattern.test(email) && message !== '') {
+                successSound.play(); // ✅ Play success sound
+            } else {
+                event.preventDefault();   // ❌ Prevent form submission
+                errorSound.play();        // ❌ Play error sound
+                alert('Please fill all fields correctly before sending your message.');
+            }
+        });
+
+        // Play sound based on server response
+        window.addEventListener('DOMContentLoaded', () => {
+            const success = '@TempData["Success"]' !== '';
+            const error = '@TempData["Error"]' !== '';
+
+            if (success) successSound.play();
+            if (error) errorSound.play();
+        });
+    </script>
+}

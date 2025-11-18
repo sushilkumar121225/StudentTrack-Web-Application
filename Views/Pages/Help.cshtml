@@ -1,0 +1,157 @@
+﻿@model StudentTrack.ViewModels.FeedbackViewModel
+@{
+    ViewData["Title"] = "Help & Feedback";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">❓ Help & Feedback</h1>
+        <p class="lead text-muted">Get answers to your questions and share your feedback</p>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="accordion mb-5" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    How do I register as a student?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Students can register with their full name, email, and a unique Student ID (8+ digits).
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    How can teachers login?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Teachers must login with their Teacher ID (format: Name+digits+tech10).
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    Can Admin register?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    No, Admin has a fixed login ID and password (AD1020 / Adminsk1050).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Form -->
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form asp-action="Help" method="post" class="p-4 shadow rounded bg-light">
+                <h4 class="mb-3 text-success">💬 Share Your Feedback</h4>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter your name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Message" class="form-label"></label>
+                    <textarea asp-for="Message" class="form-control" rows="4" placeholder="Write your feedback..."></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Rating" class="form-label"></label>
+                    <select asp-for="Rating" class="form-select">
+                        <option value="">-- Select Rating --</option>
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Good</option>
+                        <option value="3">⭐⭐⭐ Average</option>
+                        <option value="2">⭐⭐ Poor</option>
+                        <option value="1">⭐ Very Poor</option>
+                    </select>
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit Feedback</button>
+            </form>
+
+            <!-- Contact Support Button -->
+            <a asp-controller="Pages" asp-action="ContactUs" class="btn btn-success w-100 py-2 rounded-pill shadow-lg mt-3">
+                Contact Support
+            </a>
+
+            <!-- Home Button -->
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100 py-2 rounded-pill shadow-lg mt-3">
+                🏠 Back to Home
+            </a>
+
+            <!-- Success & Error Sounds -->
+            <audio id="successSound" src="~/sounds/s1.wav" preload="auto"></audio>
+            <audio id="errorSound" src="~/sounds/e1.mp3" preload="auto"></audio>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        // Client-side validation before form submission
+        document.querySelector('form').addEventListener('submit', function (event) {
+            const name = document.querySelector('[name="Name"]').value.trim();
+            const email = document.querySelector('[name="Email"]').value.trim();
+            const message = document.querySelector('[name="Message"]').value.trim();
+            const rating = document.querySelector('[name="Rating"]').value;
+
+            const successSound = document.getElementById('successSound');
+
+            if (!(name && emailPattern.test(email) && message && rating)) {
+                event.preventDefault();
+                errorSound.play();
+                alert('Please fill all fields correctly before submitting your feedback.');
+            }
+        });
+
+        // Play sound based on server response (TempData)
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const successSound = document.getElementById('successSound');
+            const errorSound = document.getElementById('errorSound');
+
+            @* Razor inject TempData values into JS *@
+            var success = '@TempData["Success"]' !== '';
+            var error = '@TempData["Error"]' !== '';
+
+            if (success) {
+                successSound.play();
+            }
+            if (error) {
+                errorSound.play();
+            }
+        });
+    </script>
+}

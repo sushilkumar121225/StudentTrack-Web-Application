@@ -1,0 +1,208 @@
+Admin login ID: AD1020
+Password: Adminsk1050 (for test)
+admin email: admin@studenttrack.local
+
+TeacherId Example: sk@teacher.com
+Password: 123456
+Student id: as email
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+													.NET project: "StudentTrack – Student Information System"
+
+suitable for academic, demo, or real-world use.
+
+? Project Title:
+
+StudentTrack – Student Information System
+
+?? Project Description:
+"StudentTrack" is a web-based application developed using ASP.NET and SQL Server that allows schools 
+or colleges to manage student data effectively. It provides role-based access for administrators, teachers, and students. 
+The system stores academic, personal, and contact information and allows for real-time record updates, student search, 
+academic performance tracking, and report generation.
+
+?? Core Modules:
+1. User Authentication & Roles
+Admin Login (Full Access)
+Teacher Login (View/Add Grades, Attendance)
+Student Login (View Profile & Grades)
+Forgot Password/Change Password
+
+2. Student Management
+Add New Student
+Edit/Delete Student Record
+View All Students with Filter/Search
+Upload Student Photo/Documents
+
+3. Academic Module
+Class & Section Assignment
+Subject Management
+Marks/Grades Entry
+Report Card Generation
+Promotion to Next Class
+
+4. Attendance Management
+Daily Attendance by Class
+Monthly Attendance Reports
+Attendance Summary by Student
+
+5. Fees Management (Optional)
+Fee Structure Setup
+Fee Payment Entry
+Generate Fee Receipts
+Fee Due Report
+
+6. Reports
+Student List Report
+Attendance Report
+Grade/Marks Report
+Fee Report
+
+??? Technology Stack:
+Layer
+Technology
+Frontend
+ASP.NET Web Forms or MVC, HTML, CSS, JavaScript
+Backend
+C#
+Database
+SQL Server
+IDE
+Visual Studio
+Reporting (optional)
+Crystal Reports or RDLC
+
+??? Database Tables (Sample):
+Students – StudentID, Name, DOB, Gender, Address, ClassID, Photo
+Classes – ClassID, ClassName
+Subjects – SubjectID, SubjectName, ClassID
+Marks – MarkID, StudentID, SubjectID, Marks
+Attendance – AttendanceID, StudentID, Date, Status
+Users – UserID, Username, Password, Role
+Fees – FeeID, StudentID, Amount, PaidDate
+
+?? Key Features:
+Role-based access control
+Responsive and user-friendly dashboard
+Secure login with password hashing
+Filter, search, and sort student records
+Export reports to Excel/PDF (optional)
+Print student ID cards (optional)
+
+?? Future Enhancements:
+SMS/Email notification integration
+Mobile app support (Xamarin or MAUI)
+Student performance analytics charts
+Online admission form
+
+Would you like:
+ER Diagram
+Use Case Diagram
+Source Code Template
+or Database Script?
+Let me know what you need next.
+
+
+***Implement or Add the Score and rating count
+--------------------------------------------------------------------------------------------------------
+?? Role-based Pages
+????? If login as Student
+
+?? Student should only see self-data and manage own uploads.
+
+Pages shown:
+
+Dashboard ? Dashboard/Student
+
+Profile ? Student/Profile (view personal info)
+
+Edit Profile ? Student/EditProfile (update own details)
+
+Upload Documents ? Student/UploadDocuments (submit assignments, ID proof, etc.)
+
+My Files ? Student/MyFiles (download notes/content uploaded by teachers)
+
+Logout
+
+????? If login as Teacher
+
+?? Teacher should see all students, upload content, and view student data.
+
+Pages shown:
+
+Dashboard ? Dashboard/Teacher
+
+Students List ? Teacher/Students (view all student records)
+
+Student Details ? Teacher/StudentDetails/{id} (open individual student profile)
+
+Upload Content ? Teacher/UploadContent (upload notes, assignments, files)
+
+My Content ? Teacher/MyContent (see all uploaded materials)
+
+Logout
+
+??? If login as Admin
+
+?? Admin should manage everything (students, teachers, subjects, classes, files, users).
+
+Pages shown:
+
+Dashboard ? Admin/Dashboard
+
+Manage Students ? Admin/Students (CRUD: Add/Edit/Delete/View student records)
+
+Manage Teachers ? Admin/Teachers (CRUD teacher records)
+
+Manage Users ? Admin/Users (control login roles & permissions)
+
+Manage Files ? Admin/Files (see all uploaded documents)
+
+Manage Subjects ? Admin/Subjects (add/remove subjects)
+
+Manage Classes ? Admin/Classes (assign students to sections/classes)
+
+Reports/Analytics (optional, e.g., Attendance, Grades)
+
+Logout
+
+?? Example Navigation Menus
+Student Navbar:
+Dashboard, My Profile, Upload Documents, My Files, Logout
+
+**Teacher Navbar:
+Dashboard, Students, Upload Content, My Content, Logout
+
+**Admin Navbar:
+Dashboard, Students, Teachers, Users, Subjects, Classes, Files, Logout
+
+--------------------------------------------------------------------------------------------------------
+Give me Auth full code for this project (Login, Register)
+1. login time always ask login as student, teacher, admin
+2. for admin only login not register simply login with 
+      Admin ID: AD1020, Password: Adminsk1050
+if correct id and password go to the Admin Page where show:
+**Admin Navbar: Dashboard, Students, Teachers, Users, Subjects, Classes, Files, Logout 
+3. for student if register and login with correct Id (like email) and password then go to the student page where show:
+Student Navbar:
+Dashboard, My Profile, Upload Documents, My Files, Logout
+4. for teacher if register and login with correct Id (like formate is: Name +numeric +compulsory code (tech10)) and 
+password then go to the student page where show: 
+**Teacher Navbar:
+Dashboard, Students, Upload Content, My Content, Logout
+
+give me full code for this project if I'm creating in ASP.Net Core Web App(MVC)
+step by step
+
+
+
+
+***********************after vacation:***************
+here frontend has been completed.
+so after vacation
+
+work on backend: db (StudentTrack)
+1. seprate table for Teacher
+2. seprate table for Student
+3. seprate table for admin

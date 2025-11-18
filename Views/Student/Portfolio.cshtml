@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Portfolio Builder";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary fw-bold mb-4">📁 Create Your Portfolio</h2>
+
+    <form id="portfolioForm" class="bg-light p-4 rounded shadow">
+        <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="pName" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">About You</label>
+            <textarea class="form-control" id="pAbout" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Skills</label>
+            <input type="text" class="form-control" id="pSkills" placeholder="HTML, C#, SQL" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Projects</label>
+            <input type="text" class="form-control" id="pProjects" placeholder="StudentTrack System" />
+        </div>
+        <button type="button" class="btn btn-primary" onclick="createPortfolio()">Create</button>
+    </form>
+
+    <div id="portfolioResult" class="mt-4"></div>
+</div>
+
+<script>
+    function createPortfolio() {
+        const name = pName.value, about = pAbout.value, skills = pSkills.value, projects = pProjects.value;
+        portfolioResult.innerHTML = `
+            <div class='bg-white p-3 rounded shadow'>
+                <h4>${name}</h4>
+                <p><b>About:</b> ${about}</p>
+                <p><b>Skills:</b> ${skills}</p>
+                <p><b>Projects:</b> ${projects}</p>
+                <button class='btn btn-success btn-sm' onclick='downloadText("${name}_portfolio.txt","${name}\\n${about}\\n${skills}\\n${projects}")'>Download</button>
+            </div>`;
+    }
+    function downloadText(filename, text) {
+        const blob = new Blob([text], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+    }
+</script>

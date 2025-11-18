@@ -1,0 +1,587 @@
+index.cshtml
+
+@{
+    ViewData["Title"] = "StudentTrack - Home";
+}
+
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">?? Welcome to StudentTrack</h1>
+        <p class="lead text-muted">A Smart Student Information Management System</p>
+    </div>
+
+    <!-- Carousel -->
+    <div id="homeCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner rounded shadow">
+            <div class="carousel-item active">
+                <img src="~/pictures/st1.jpg" class="d-block w-100" alt="Education">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5>Manage Students Easily</h5>
+                    <p>Track attendance, grades, and progress at one place.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/pictures/st2.png" class="d-block w-100" alt="Teacher">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5>Empower Teachers</h5>
+                    <p>Upload and manage course content seamlessly.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/pictures/st3.png" class="d-block w-100" alt="Students">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5>Better Student Experience</h5>
+                    <p>Access study materials, documents, and profile anytime.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- Role Cards -->
+    <div class="row text-center mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">????? Student</h3>
+                    <p class="card-text text-muted">Register with a Student ID, access profile, upload and manage your files easily.</p>
+                    <a href="/Account/Login" class="btn btn-outline-primary">Login as Student</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body">
+                    <h3 class="card-title text-success">????? Teacher</h3>
+                    <p class="card-text text-muted">Login with Teacher ID, manage students, upload and share content effectively.</p>
+                    <a href="/Account/Login" class="btn btn-outline-success">Login as Teacher</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body">
+                    <h3 class="card-title text-danger">??? Admin</h3>
+                    <p class="card-text text-muted">Secure login for Admin to manage dashboard, students, teachers, and system data.</p>
+                    <a href="/Account/Login" class="btn btn-outline-danger">Login as Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="text-center mb-5">
+        <h4 class="fw-bold">?? Quick Links</h4>
+        <a href="/Account/Register" class="btn btn-primary m-2">Register</a>
+        <a href="/Pages/About" class="btn btn-secondary m-2">About</a>
+        <a href="/Pages/ContactUs" class="btn btn-info m-2">Contact Us</a>
+        <a href="/Pages/Help" class="btn btn-warning m-2">Help</a>
+        <a href="/Pages/Privacy" class="btn btn-success m-2">Privacy</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light text-center py-2 mt-5">
+    <p class="mb-0">© @DateTime.Now.Year StudentTrack | All rights reserved.</p>
+</footer>
+
+------------------------------------------------------------------------------------------------
+_Layout.cshtml
+
+@using Microsoft.AspNetCore.Identity
+@using StudentTrack.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>StudentTrack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+
+    <style>
+        /* Gradient background */
+        .navbar-gradient {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            padding: 20px 0;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+            /* Hover and Active link effect */
+            .nav-link:hover,
+            .nav-link.active-link {
+                background-color: rgba(255, 255, 255, 0.2);
+                color: #fff !important;
+            }
+
+                /* Identification curved rectangular mark below the link */
+                .nav-link.active-link::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -8px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 60%;
+                    height: 6px;
+                    background: #fff;
+                    border-radius: 10px 10px 0 0; /* curved rectangular mark */
+                }
+
+        .navbar-brand, .navbar-title {
+            color: #fff !important;
+            font-weight: bold;
+        }
+
+            .navbar-brand img {
+                width: 60px;
+                height: 60px;
+            }
+
+        .navbar-title {
+            font-size: 2rem;
+            margin-left: 15px;
+        }
+
+        .custom-toggler {
+            font-size: 28px;
+            color: #fff;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .navbar-nav {
+            font-size: 1rem;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-gradient">
+        <div class="container">
+            <!-- Left: Logo and Title -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="~/pictures/logo.png" alt="Logo" class="me-2" />
+                <span class="navbar-title">StudentTrack</span>
+            </a>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <button class="custom-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    ?
+                </button>
+            }
+
+            <!-- Navigation links -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Admin" ? "active-link" : "")" href="@Url.Action("Admin", "Dashboard")">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Students" ? "active-link" : "")" href="@Url.Action("Students", "Admin")">Students</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Teachers" ? "active-link" : "")" href="@Url.Action("Teachers", "Admin")">Teachers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Users" ? "active-link" : "")" href="@Url.Action("Users", "Admin")">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Subjects" ? "active-link" : "")" href="@Url.Action("Subjects", "Admin")">Subjects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Classes" ? "active-link" : "")" href="@Url.Action("Classes", "Admin")">Classes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Files" ? "active-link" : "")" href="@Url.Action("Files", "Admin")">Files</a>
+                            </li>
+                        }
+                    }
+                </ul>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <ul class="navbar-nav ms-auto d-lg-none mt-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+                        </li>
+                    </ul>
+                    <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none"></form>
+                }
+            </div>
+
+            <!-- Logout for large screen -->
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logoutFormLarge').submit();">Logout</a>
+                    </li>
+                </ul>
+                <form id="logoutFormLarge" asp-controller="Account" asp-action="Logout" method="post" class="d-none"></form>
+            }
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        @RenderBody()
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+-----------------
+
+@{
+    ViewData["Title"] = "Student Creativity";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Student Creativity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            min-height: 100vh;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .creativity-header {
+            text-align: center;
+            padding: 60px 0 30px;
+        }
+
+            .creativity-header h1 {
+                font-weight: 700;
+                font-size: 3rem;
+            }
+
+        .poster-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding-bottom: 50px;
+        }
+
+        .poster-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            width: 260px;
+            height: 260px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+            .poster-card:hover {
+                transform: translateY(-10px);
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .poster-card h3 {
+                font-size: 1.6rem;
+                font-weight: 600;
+                margin-top: 20px;
+            }
+
+        .poster-icon {
+            font-size: 60px;
+        }
+
+        .modal-content {
+            border-radius: 20px;
+        }
+
+        .form-label {
+            color: #000;
+        }
+
+        .created-item {
+            background: #fff;
+            color: #000;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+            .btn-custom:hover {
+                background: linear-gradient(90deg, #2575fc, #6a11cb);
+                transform: scale(1.05);
+            }
+
+        .note-editor {
+            background: #fff;
+            color: #000;
+            border-radius: 15px;
+            padding: 15px;
+            min-height: 200px;
+        }
+
+        .note-controls select, .note-controls input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="creativity-header">
+            <h1>?? Student Creativity Center</h1>
+            <p class="lead">Show your creativity! Create Portfolio, Resume (CSV), Bio Data, and Notes beautifully.</p>
+        </div>
+
+        <!-- Four Poster Buttons -->
+        <div class="poster-container">
+            <div class="poster-card" data-bs-toggle="modal" data-bs-target="#portfolioModal">
+                <div class="poster-icon">??</div>
+                <h3>Portfolio</h3>
+            </div>
+            <div class="poster-card" data-bs-toggle="modal" data-bs-target="#csvModal">
+                <div class="poster-icon">??</div>
+                <h3>CSV Resume</h3>
+            </div>
+            <div class="poster-card" data-bs-toggle="modal" data-bs-target="#biodataModal">
+                <div class="poster-icon">?????</div>
+                <h3>Bio Data</h3>
+            </div>
+            <div class="poster-card" data-bs-toggle="modal" data-bs-target="#notesModal">
+                <div class="poster-icon">??</div>
+                <h3>Write Notes</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PORTFOLIO MODAL ==================== -->
+    <div class="modal fade" id="portfolioModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Create Portfolio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="portfolioForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="pName" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">About You</label>
+                            <textarea class="form-control" id="pAbout" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Skills</label>
+                            <input type="text" class="form-control" id="pSkills" placeholder="e.g., HTML, C#, SQL" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Projects</label>
+                            <input type="text" class="form-control" id="pProjects" placeholder="e.g., StudentTrack System" />
+                        </div>
+                        <button type="button" class="btn btn-custom" onclick="createPortfolio()">Create</button>
+                    </form>
+                    <div id="portfolioResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CSV MODAL ==================== -->
+    <div class="modal fade" id="csvModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Create Resume (CSV)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="csvForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="csvName" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="csvEmail" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Experience</label>
+                            <textarea class="form-control" id="csvExp" rows="3"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-custom" onclick="createCSV()">Create CSV</button>
+                    </form>
+                    <div id="csvResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== BIO DATA MODAL ==================== -->
+    <div class="modal fade" id="biodataModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Create Bio Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bioForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" id="bioName" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="bioDob" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" id="bioAddress" />
+                        </div>
+                        <button type="button" class="btn btn-custom" onclick="createBio()">Create</button>
+                    </form>
+                    <div id="bioResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== NOTES MODAL ==================== -->
+    <div class="modal fade" id="notesModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Write Notes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="note-controls mb-3">
+                        <select id="fontSelect" onchange="changeFont()">
+                            <option value="Poppins">Poppins</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                        </select>
+                        <input type="number" id="fontSize" value="16" min="12" max="40" onchange="changeFontSize()" />
+                        <input type="color" id="bgColor" onchange="changeBgColor()" />
+                    </div>
+                    <div contenteditable="true" id="noteEditor" class="note-editor">Write your notes here...</div>
+                    <div class="mt-3 text-end">
+                        <button class="btn btn-success" onclick="downloadNotes()">Download</button>
+                        <button class="btn btn-danger" onclick="clearNotes()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function createPortfolio() {
+            const name = document.getElementById("pName").value;
+            const about = document.getElementById("pAbout").value;
+            const skills = document.getElementById("pSkills").value;
+            const projects = document.getElementById("pProjects").value;
+
+            const html = `
+                <div class='created-item'>
+                    <h4>${name}</h4>
+                    <p><strong>About:</strong> ${about}</p>
+                    <p><strong>Skills:</strong> ${skills}</p>
+                    <p><strong>Projects:</strong> ${projects}</p>
+                    <button class='btn btn-custom btn-sm' onclick='alert("Editing portfolio...")'>Edit</button>
+                    <button class='btn btn-danger btn-sm' onclick='this.parentElement.remove()'>Delete</button>
+                    <button class='btn btn-success btn-sm' onclick='downloadText("${name}_portfolio.txt", "Name: ${name}\\nAbout: ${about}\\nSkills: ${skills}\\nProjects: ${projects}")'>Download</button>
+                </div>`;
+            document.getElementById("portfolioResult").innerHTML = html;
+        }
+
+        function createCSV() {
+            const name = document.getElementById("csvName").value;
+            const email = document.getElementById("csvEmail").value;
+            const exp = document.getElementById("csvExp").value;
+            const csvContent = `Name,Email,Experience\n${name},${email},"${exp}"`;
+            downloadText(`${name}_resume.csv`, csvContent);
+        }
+
+        function createBio() {
+            const name = document.getElementById("bioName").value;
+            const dob = document.getElementById("bioDob").value;
+            const address = document.getElementById("bioAddress").value;
+            const content = `Name: ${name}\nDOB: ${dob}\nAddress: ${address}`;
+            downloadText(`${name}_biodata.txt`, content);
+        }
+
+        function changeFont() {
+            document.getElementById("noteEditor").style.fontFamily = document.getElementById("fontSelect").value;
+        }
+
+        function changeFontSize() {
+            document.getElementById("noteEditor").style.fontSize = document.getElementById("fontSize").value + "px";
+        }
+
+        function changeBgColor() {
+            document.getElementById("noteEditor").style.background = document.getElementById("bgColor").value;
+        }
+
+        function downloadNotes() {
+            const content = document.getElementById("noteEditor").innerText;
+            downloadText("MyNotes.txt", content);
+        }
+
+        function clearNotes() {
+            document.getElementById("noteEditor").innerText = "";
+        }
+
+        function downloadText(filename, text) {
+            const blob = new Blob([text], { type: "text/plain" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+    </script>
+</body>
+</html>
+---------
+

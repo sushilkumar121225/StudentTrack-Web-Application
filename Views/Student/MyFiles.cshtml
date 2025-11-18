@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "My Files";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">📁 My Files</h1>
+        <p class="lead text-muted">View and manage all the documents shared by your teachers or uploaded by you.</p>
+    </div>
+
+    <div class="file-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold text-secondary">📘 Shared Files</h4>
+            <button class="btn btn-success shadow-sm" onclick="refreshFiles()">🔄 Refresh List</button>
+        </div>
+
+        <div class="table-responsive shadow rounded bg-white p-3">
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-primary">
+                    <tr>
+                        <th>📑 File Name</th>
+                        <th>📂 Uploaded By</th>
+                        <th>📅 Date</th>
+                        <th>⬇️ Download</th>
+                        <th>🗑️ Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="fileTableBody">
+                    <!-- Sample static rows (can be dynamic later) -->
+                    <tr>
+                        <td>Mathematics_Notes.pdf</td>
+                        <td>Teacher - Mr. Sharma</td>
+                        <td>12 Oct 2025</td>
+                        <td>
+                            <a href="~/uploads/Mathematics_Notes.pdf" class="btn btn-outline-primary btn-sm" download>Download</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteFile(this)">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Science_Assignment.docx</td>
+                        <td>Teacher - Mrs. Verma</td>
+                        <td>09 Oct 2025</td>
+                        <td>
+                            <a href="~/uploads/Science_Assignment.docx" class="btn btn-outline-primary btn-sm" download>Download</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteFile(this)">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Student_ID_Proof.jpg</td>
+                        <td>You</td>
+                        <td>10 Oct 2025</td>
+                        <td>
+                            <a href="~/uploads/Student_ID_Proof.jpg" class="btn btn-outline-primary btn-sm" download>Download</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteFile(this)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- CSS Section -->
+<style>
+    body {
+        background: #f7f9fc;
+    }
+
+    .file-section {
+        background: #fff;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    thead {
+        background: linear-gradient(90deg, #6a11cb, #2575fc);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+
+    td {
+        vertical-align: middle;
+        color: #333;
+        font-size: 1rem;
+    }
+
+    .btn-outline-primary, .btn-outline-danger {
+        border-radius: 20px;
+        transition: 0.3s ease;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #2575fc;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #ff4d4d;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+    .fw-bold.text-primary {
+        font-size: 2rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-responsive {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+</style>
+
+<!-- JS Section -->
+<script>
+    function deleteFile(button) {
+        if (confirm("Are you sure you want to delete this file?")) {
+            const row = button.closest("tr");
+            row.style.backgroundColor = "#ffdddd";
+            setTimeout(() => row.remove(), 400);
+            alert("File deleted successfully!");
+        }
+    }
+
+    function refreshFiles() {
+        alert("Refreshing file list...");
+        // In real project, fetch() API call to reload files dynamically.
+    }
+</script>

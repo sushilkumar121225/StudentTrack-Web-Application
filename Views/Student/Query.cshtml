@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Send Query to Teacher";
+}
+
+<div class="container mt-5 shadow p-4 rounded" style="max-width: 600px; background: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
+    <h2 class="text-center text-primary mb-4 fw-bold">📩 Send Query / Feedback to Teacher</h2>
+
+    <form asp-action="SendQuery" asp-controller="Query" method="post">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Your Email</label>
+            <input type="email" name="SenderEmail" class="form-control" value="@User.Identity.Name" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Teacher Email</label>
+            <input type="email" name="ReceiverEmail" class="form-control" placeholder="Enter Teacher's Email" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Your Query / Feedback</label>
+            <textarea name="Message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Send Query</button>
+    </form>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success mt-4 text-center">@ViewBag.Message</div>
+    }
+</div>
+
+<style>
+    h2 {
+        letter-spacing: 1px;
+    }
+
+    textarea:focus, input:focus {
+        border-color: #2575fc !important;
+        box-shadow: 0 0 5px #2575fc;
+    }
+</style>

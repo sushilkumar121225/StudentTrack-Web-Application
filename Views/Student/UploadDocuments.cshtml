@@ -1,0 +1,171 @@
+﻿@{
+    ViewData["Title"] = "Upload Documents";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">📤 Upload Your Documents</h1>
+        <p class="lead text-muted">Submit your ID proof, assignments, or project files easily</p>
+    </div>
+
+    <div class="upload-box mx-auto p-5 text-center shadow-lg rounded-4">
+        <div id="dropZone" class="drop-zone">
+            <i class="bi bi-cloud-arrow-up-fill upload-icon"></i>
+            <h4>Drag & Drop your files here</h4>
+            <p>or click below to select files manually</p>
+            <input type="file" id="fileInput" multiple class="form-control-file" hidden />
+            <button class="btn btn-gradient mt-3" id="selectBtn">Select Files</button>
+        </div>
+
+        <div class="progress mt-4 d-none" id="progressSection">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                 role="progressbar" style="width: 0%" id="progressBar"></div>
+        </div>
+
+        <ul class="list-group mt-4 text-start" id="fileList"></ul>
+
+        <button class="btn btn-success mt-4 px-5 py-2" id="uploadBtn" disabled>
+            <i class="bi bi-upload me-2"></i>Upload Files
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const dropZone = document.getElementById("dropZone");
+        const fileInput = document.getElementById("fileInput");
+        const selectBtn = document.getElementById("selectBtn");
+        const uploadBtn = document.getElementById("uploadBtn");
+        const fileList = document.getElementById("fileList");
+        const progressBar = document.getElementById("progressBar");
+        const progressSection = document.getElementById("progressSection");
+
+        let selectedFiles = [];
+
+        selectBtn.addEventListener("click", () => fileInput.click());
+
+        fileInput.addEventListener("change", (e) => {
+            selectedFiles = Array.from(e.target.files);
+            displayFiles();
+        });
+
+        dropZone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZone.classList.add("drop-zone-hover");
+        });
+
+        dropZone.addEventListener("dragleave", () => {
+            dropZone.classList.remove("drop-zone-hover");
+        });
+
+        dropZone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            dropZone.classList.remove("drop-zone-hover");
+            selectedFiles = Array.from(e.dataTransfer.files);
+            displayFiles();
+        });
+
+        function displayFiles() {
+            fileList.innerHTML = "";
+            if (selectedFiles.length > 0) {
+                selectedFiles.forEach((file, index) => {
+                    const listItem = document.createElement("li");
+                    listItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+                    listItem.innerHTML = `
+                        <span>${file.name}</span>
+                        <button class="btn btn-sm btn-danger" onclick="removeFile(${index})">Remove</button>
+                    `;
+                    fileList.appendChild(listItem);
+                });
+                uploadBtn.disabled = false;
+            } else {
+                uploadBtn.disabled = true;
+            }
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            displayFiles();
+        }
+
+        uploadBtn.addEventListener("click", () => {
+            if (selectedFiles.length === 0) return;
+
+            progressSection.classList.remove("d-none");
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + "%";
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        alert("✅ Files uploaded successfully!");
+                        progressSection.classList.add("d-none");
+                        progressBar.style.width = "0%";
+                        selectedFiles = [];
+                        displayFiles();
+                    }, 500);
+                }
+            }, 200);
+        });
+    </script>
+}
+
+<style>
+    /* Background and layout styling */
+    body {
+        background: linear-gradient(120deg, #e0f7fa, #e3f2fd);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .upload-box {
+        max-width: 600px;
+        background: #fff;
+    }
+
+    .drop-zone {
+        border: 2px dashed #2575fc;
+        border-radius: 20px;
+        padding: 40px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+
+    .drop-zone-hover {
+        background-color: #e3f2fd;
+        border-color: #6a11cb;
+        transform: scale(1.02);
+    }
+
+    .upload-icon {
+        font-size: 4rem;
+        color: #2575fc;
+        margin-bottom: 10px;
+    }
+
+    .btn-gradient {
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        transition: 0.3s;
+    }
+
+        .btn-gradient:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+    .list-group-item {
+        background-color: #fefefe;
+        border: 1px solid #ddd;
+    }
+
+        .list-group-item button {
+            border-radius: 8px;
+        }
+</style>

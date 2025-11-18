@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">📘 About StudentTrack</h1>
+        <p class="lead text-muted">Smart Student Information Management System</p>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <img src="https://www.busboss.com/hubfs/GPS%20Student%20Tracking-1.jpg" class="img-fluid rounded shadow" alt="About StudentTrack" />
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+            <p class="fs-5">
+                <b>StudentTrack</b> is a complete solution for managing students, teachers, and administrators in one place.
+                With features like attendance, file management, content uploads, and role-based dashboards,
+                it makes education smarter and more efficient.
+            </p>
+        </div>
+    </div>
+
+    <!-- Mission -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-success">🎯 Our Mission</h2>
+        <p class="fs-5">To empower schools, teachers, and students with digital tools for better learning and management.</p>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body">
+                    <h4 class="text-primary">📊 Simplify Management</h4>
+                    <p>Centralized dashboard for tracking students, teachers, and classes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body">
+                    <h4 class="text-success">📚 Empower Learning</h4>
+                    <p>Teachers can upload content, students can access files anytime.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 h-100">
+                <div class="card-body">
+                    <h4 class="text-warning">🌍 Go Digital</h4>
+                    <p>Paperless, eco-friendly, and accessible from anywhere, anytime.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Help Button -->
+        <a asp-controller="Pages" asp-action="Help" class="btn btn-primary px-4 py-2 rounded-pill shadow-lg mt-3">
+            Give Feedback
+        </a>
+        <!-- Home Button -->
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill shadow-lg mt-3">
+            🏠 Back to Home
+        </a>
+    </div>
+</div>

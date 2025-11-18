@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Upload Content";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-info">Upload Content</h2>
+    <p>Upload notes, assignments, or other study material.</p>
+
+    <form asp-action="UploadContent" method="post" enctype="multipart/form-data" class="mt-3">
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" required>
+        </div>
+        <div class="mb-3">
+            <label for="File" class="form-label">Select File</label>
+            <input type="file" class="form-control" id="File" name="File" required>
+        </div>
+        <button type="submit" class="btn btn-success">Upload</button>
+        <a href="/Teacher/MyContent" class="btn btn-secondary">View My Content</a>
+    </form>
+</div>

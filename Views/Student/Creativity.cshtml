@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Student Creativity";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Student Creativity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            min-height: 100vh;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .creativity-header {
+            text-align: center;
+            padding: 60px 0 30px;
+        }
+
+            .creativity-header h1 {
+                font-weight: 700;
+                font-size: 3rem;
+            }
+
+        .poster-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding-bottom: 50px;
+        }
+
+        .poster-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            width: 260px;
+            height: 260px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+            .poster-card:hover {
+                transform: translateY(-10px);
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .poster-card h3 {
+                font-size: 1.6rem;
+                font-weight: 600;
+                margin-top: 20px;
+            }
+
+        .poster-icon {
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="creativity-header">
+            <h1>🎨 Student Creativity Center</h1>
+            <p class="lead">Show your creativity! Choose one below to get started.</p>
+        </div>
+
+        <!-- Four Poster Buttons -->
+        <div class="poster-container">
+            <a class="poster-card" href="@Url.Action("Portfolio", "Student")">
+                <div class="poster-icon">📁</div>
+                <h3>Portfolio</h3>
+            </a>
+            <a class="poster-card" href="@Url.Action("Csv", "Student")">
+                <div class="poster-icon">📄</div>
+                <h3>CSV Resume</h3>
+            </a>
+            <a class="poster-card" href="@Url.Action("BioData", "Student")">
+                <div class="poster-icon">🧍‍♂️</div>
+                <h3>Bio Data</h3>
+            </a>
+            <a class="poster-card" href="@Url.Action("Notes", "Student")">
+                <div class="poster-icon">📝</div>
+                <h3>Write Notes</h3>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

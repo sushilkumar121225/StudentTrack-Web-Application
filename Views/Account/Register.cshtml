@@ -1,0 +1,272 @@
+﻿@model StudentTrack.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center align-items-start g-4">
+
+        <!-- Left Side: Register Form -->
+        <div class="col-lg-6 col-md-7">
+            <div id="registerCard" class="card shadow-lg border-0 rounded-4 p-3" style="background: #fff;">
+                <!-- Logo Section -->
+                <div class="text-center mb-2">
+                    <img src="~/pictures/logo.png" alt="StudentTrack Logo" class="img-fluid mb-1" style="width: 70px; height: 70px; object-fit: contain;" />
+                    <h4 class="fw-bold text-primary mt-1">Create Account</h4>
+                    <p class="text-muted small" style="margin-top: -10px">Fill in your details to get started</p>
+                </div>
+
+                <form asp-action="Register" method="post" id="registerForm">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="text-danger mb-2 small"></div>
+
+                    <!-- Full Name -->
+                    <div class="mb-2" style="margin-top: -20px">
+                        <label asp-for="FullName" class="form-label fw-semibold small"></label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            <input asp-for="FullName" class="form-control rounded-end validate-field" placeholder="Enter your full name" data-type="text" />
+                        </div>
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-2">
+                        <label asp-for="Email" class="form-label fw-semibold small"></label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" class="form-control rounded-end validate-field" placeholder="example@email.com" data-type="email" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-2">
+                        <label asp-for="Password" class="form-label fw-semibold small"></label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Password" type="password" class="form-control rounded-end validate-field" placeholder="Enter password" data-type="password" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-2">
+                        <label asp-for="ConfirmPassword" class="form-label fw-semibold small"></label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-shield-lock"></i></span>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control rounded-end validate-field" placeholder="Re-enter password" data-type="confirm" />
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="mb-2">
+                        <label asp-for="Role" class="form-label fw-semibold small"></label>
+                        <select asp-for="Role" class="form-select form-select-sm validate-field" id="roleSelect" data-type="role">
+                            <option value="">-- Select Role --</option>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Teacher ID -->
+                    <div class="mb-2" id="teacherIdDiv" style="display:none;">
+                        <label asp-for="TeacherId" class="form-label fw-semibold small"></label>
+                        <input asp-for="TeacherId" class="form-control form-control-sm validate-field" placeholder="John123tech10" data-type="teacher" />
+                        <span asp-validation-for="TeacherId" class="text-danger small"></span>
+                        <div class="form-text small">Format: Name + digits + tech10 (e.g. John123tech10)</div>
+                    </div>
+
+                    <!-- Buttons Row -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <!-- Register Button -->
+                        <button type="submit" class="btn btn-primary btn-sm rounded-pill shadow" style="width: 150px;">
+                            <i class="bi bi-person-plus-fill"></i> Register
+                        </button>
+
+                        <!-- Back to Home -->
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                            🏠 Back to Home
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side: Real-time Feedback -->
+        <div class="col-lg-5 col-md-5">
+            <div class="frame-container p-3 d-flex align-items-center justify-content-center">
+                <ul class="list-group small" id="feedbackList">
+                    <li class="list-group-item" id="fb-fullname"><span class="status-text">⬤ Enter your name</span></li>
+                    <li class="list-group-item" id="fb-email"><span class="status-text">⬤ Enter your e-mail</span></li>
+                    <li class="list-group-item" id="fb-password"><span class="status-text">⬤ Enter your password</span></li>
+                    <li class="list-group-item" id="fb-confirm"><span class="status-text">⬤ Enter confirm password</span></li>
+                    <li class="list-group-item" id="fb-role"><span class="status-text">⬤ Select role</span></li>
+                    <li class="list-group-item" id="fb-teacher" style="display:none;"><span class="status-text">⬤ Enter Teacher ID</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @Html.Raw(@"
+    <script>
+        const roleSelect = document.getElementById('roleSelect');
+        const teacherDiv = document.getElementById('teacherIdDiv');
+        const fbTeacher = document.getElementById('fb-teacher');
+        const registerCard = document.getElementById('registerCard');
+
+        roleSelect.addEventListener('change', function () {
+            if (this.value === 'Teacher') {
+                teacherDiv.style.display = 'block';
+                fbTeacher.style.display = 'block';
+                registerCard.style.height = 'auto'; 
+            } else {
+                teacherDiv.style.display = 'none';
+                fbTeacher.style.display = 'none';
+                registerCard.style.height = 'auto'; 
+            }
+        });
+
+        // Real-time validation
+        const fields = document.querySelectorAll('.validate-field');
+        fields.forEach(field => {
+            field.addEventListener('input', () => validateField(field));
+        });
+
+        function validateField(field) {
+            const type = field.getAttribute('data-type');
+            let isValid = false;
+            let message = '';
+            let color = 'black';
+
+            switch (type) {
+                case 'text':
+                    if (field.value.trim().length > 2) {
+                        isValid = true;
+                        message = '🟢 Correct your name.';
+                        color = 'green';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 Name at least 3 letters.';
+                        color = 'red';
+                    } else {
+                        message = '⬤ Enter your name';
+                    }
+                    break;
+                case 'email':
+                    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                        isValid = true;
+                        message = '🟢 Correct your email.';
+                        color = 'green';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 with @gmail.com';
+                        color = 'red';
+                    } else {
+                        message = '⬤ Enter your e-mail';
+                    }
+                    break;
+                case 'password':
+                    if (field.value.length >= 6) {
+                        isValid = true;
+                        message = '🟢 Correct your password.';
+                        color = 'green';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 At least 6 digits.';
+                        color = 'red';
+                    } else {
+                        message = '⬤ Enter your password';
+                    }
+                    break;
+                case 'confirm':
+                    const pwd = document.querySelector('[data-type=""password""]').value;
+                    if (field.value === pwd && field.value !== '') {
+                        isValid = true;
+                        message = '🟢 Your password matched.';
+                        color = 'green';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 Password not match.';
+                        color = 'red';
+                    } else {
+                        message = '⬤ Enter confirm password';
+                    }
+                    break;
+                case 'role':
+                    if (field.value !== '') {
+                        isValid = true;
+                        message = '🟢 Role is selected.';
+                        color = 'green';
+                    } else {
+                        message = '🔴 Please role select.';
+                        color = 'red';
+                    }
+                    break;
+                case 'teacher':
+                    if (/^[A-Za-z]+\d+tech10$/.test(field.value)) {
+                        isValid = true;
+                        message = '🟢 Correct Teacher ID.';
+                        color = 'green';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 Format: Name+digits+tech10';
+                        color = 'red';
+                    } else {
+                        message = '⬤ Enter Teacher ID';
+                    }
+                    break;
+            }
+
+            // Update feedback list
+            let feedbackItem = null;
+            switch (type) {
+                case 'text': feedbackItem = document.getElementById('fb-fullname'); break;
+                case 'email': feedbackItem = document.getElementById('fb-email'); break;
+                case 'password': feedbackItem = document.getElementById('fb-password'); break;
+                case 'confirm': feedbackItem = document.getElementById('fb-confirm'); break;
+                case 'role': feedbackItem = document.getElementById('fb-role'); break;
+                case 'teacher': feedbackItem = document.getElementById('fb-teacher'); break;
+            }
+
+            if (feedbackItem) {
+                feedbackItem.querySelector('.status-text').innerText = message;
+                feedbackItem.querySelector('.status-text').style.color = color;
+            }
+        }
+    </script>
+    ")
+}
+
+<!-- Styles -->
+<style>
+    .frame-container {
+        background: url('/pictures/frame.png') no-repeat center;
+        background-size: contain;
+        border-radius: 12px;
+        width: 280px;
+        height: 500px;
+        margin: auto;
+        padding: 20px;
+    }
+    .status-text {
+        font-weight: bold;
+        color: black; /* default */
+    }
+    #feedbackList {
+        width: 85%;
+        max-width: 300px;
+        margin: auto;
+        border: none;
+        margin-top: 180px;
+    }
+    #feedbackList .list-group-item {
+        border: none;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+</style>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />

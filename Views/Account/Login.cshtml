@@ -1,0 +1,258 @@
+﻿@model StudentTrack.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center align-items-start g-4">
+
+        <!-- Left Side: Login Form -->
+        <div class="col-lg-6 col-md-7">
+            <div id="loginCard" class="card shadow-lg border-0 rounded-4 p-3" style="background: #fff; width: 380px;">
+                <!-- Logo Section -->
+                <div class="text-center mb-2">
+                    <img src="~/pictures/logo.png" alt="StudentTrack Logo" class="img-fluid mb-1" style="width: 70px; height: 70px; object-fit: contain;" />
+                    <h4 class="fw-bold text-primary mt-1">Welcome Back</h4>
+                    <p class="text-muted small" style="margin-top: -10px">Login to continue</p>
+                </div>
+
+                <form asp-action="Login" method="post" id="loginForm">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="text-danger mb-2 small"></div>
+
+                    <!-- LoginId -->
+                    <div class="mb-2">
+                        <label asp-for="LoginId" class="form-label fw-semibold small"></label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-envelope-at"></i></span>
+                            <input asp-for="LoginId" class="form-control rounded-end validate-field" placeholder="Enter your Email/ID" data-type="loginid" />
+                        </div>
+                        <span asp-validation-for="LoginId" class="text-danger small"></span>
+                        <div class="form-text small">Students: use Email | Teachers/Admin: use ID</div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-2">
+                        <label asp-for="Password" class="form-label fw-semibold small"></label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Password" type="password" class="form-control rounded-end validate-field" placeholder="Enter your password" data-type="password" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="mb-2">
+                        <label asp-for="Role" class="form-label fw-semibold small"></label>
+                        <select asp-for="Role" class="form-select form-select-sm validate-field" id="roleSelect" data-type="role">
+                            <option value="">-- Select Role --</option>
+                            <option value="Student">Student 🎓</option>
+                            <option value="Teacher">Teacher 👩‍🏫</option>
+                            <option value="Admin">Admin ⚙️</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="form-check mb-2">
+                        <input asp-for="RememberMe" class="form-check-input validate-field" data-type="remember" />
+                        <label asp-for="RememberMe" class="form-check-label small"></label>
+                    </div>
+
+                    <!-- Captcha Section -->
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold small">Captcha Verification</label>
+                        <div class="d-flex align-items-center">
+                            <span id="captchaCode"
+                                  class="px-3 py-2 border rounded bg-light fw-bold fs-6"
+                                  oncopy="return false;"
+                                  oncut="return false;"
+                                  onpaste="return false;"
+                                  onselectstart="return false;"
+                                  style="user-select: none; -webkit-user-select: none; -moz-user-select: none;">
+                            </span>
+                            <button type="button" class="btn btn-light btn-sm ms-2 border" onclick="generateCaptcha()" title="Refresh Captcha">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="captchaInput" class="form-control form-control-sm mt-2 validate-field" placeholder="Enter captcha code" data-type="captcha" />
+                    </div>
+
+                    <!-- Buttons Row -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <button type="submit" id="loginBtn" class="btn btn-primary btn-sm rounded-pill shadow" style="width: 140px; display:none;">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                            🏠 Back to Home
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side: Real-time Feedback -->
+        <div class="col-lg-5 col-md-5">
+            <div class="frame-container p-3 d-flex align-items-center justify-content-center">
+                <ul class="list-group small" id="feedbackList">
+                    <li class="list-group-item" id="fb-loginid"><span class="status-text">⬤ Enter your email/ID.</span></li>
+                    <li class="list-group-item" id="fb-password"><span class="status-text">⬤ Enter your password.</span></li>
+                    <li class="list-group-item" id="fb-role"><span class="status-text">⬤ Select a role.</span></li>
+                    <li class="list-group-item" id="fb-remember"><span class="status-text">⬤ For remember id & password.</span></li>
+                    <li class="list-group-item" id="fb-captcha"><span class="status-text">⬤ Fill correct captcha.</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @Html.Raw(@"
+    <script>
+        let captcha = '';
+
+        function generateCaptcha() {
+            let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captchaCode').textContent = captcha;
+            document.getElementById('captchaInput').value = '';
+            updateFeedback('captcha', '⬤ Fill correct captcha.', 'black');
+            document.getElementById('loginBtn').style.display = 'none';
+        }
+
+        // Real-time validation
+        const fields = document.querySelectorAll('.validate-field');
+        fields.forEach(field => {
+            field.addEventListener('input', () => validateField(field));
+            if (field.type === 'checkbox') {
+                field.addEventListener('change', () => validateField(field));
+            }
+        });
+
+        function validateField(field) {
+            const type = field.getAttribute('data-type');
+            let message = '';
+            let color = 'black';
+            let isValid = false;
+
+            switch (type) {
+                case 'loginid':
+                    if (/^[A-Za-z0-9]+$/.test(field.value) || /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(field.value)) {
+                        isValid = true;
+                        message = '🟢 Correct your login ID.';
+                        color = 'green';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 Enter valid Login ID.';
+                        color = 'red';
+                    } else {
+                        message = '⬤ Enter your email/ID.';
+                    }
+                    break;
+                case 'password':
+                    if (field.value.trim().length > 0) {
+                        isValid = true;
+                        message = '🟢 Your password is filled.';
+                        color = 'green';
+                    } else {
+                        message = '🔴 Your password is wrong.';
+                        color = 'red';
+                    }
+                    break;
+                case 'role':
+                    if (field.value !== '') {
+                        isValid = true;
+                        message = '🟢 Role is selected.';
+                        color = 'green';
+                    } else {
+                        message = '🔴 Please select role.';
+                        color = 'red';
+                    }
+                    break;
+                case 'remember':
+                    if (field.checked) {
+                        isValid = true;
+                        message = '🟢 Saved id & password.';
+                        color = 'green';
+                    } else {
+                        message = '⬤ Not mandatory.';
+                        color = 'black';
+                    }
+                    break;
+                case 'captcha':
+                    if (field.value === captcha && field.value !== '') {
+                        isValid = true;
+                        message = '🟢 Your captcha is correct.';
+                        color = 'green';
+                        document.getElementById('loginBtn').style.display = 'block';
+                    } else if (field.value.trim() !== '') {
+                        message = '🔴 Incorrect your captcha.';
+                        color = 'red';
+                        document.getElementById('loginBtn').style.display = 'none';
+                    } else {
+                        message = '⬤ Fill correct captcha.';
+                        color = 'black';
+                        document.getElementById('loginBtn').style.display = 'none';
+                    }
+                    break;
+            }
+
+            updateFeedback(type, message, color);
+        }
+
+        function updateFeedback(type, message, color) {
+            let feedbackItem = null;
+            switch (type) {
+                case 'loginid': feedbackItem = document.getElementById('fb-loginid'); break;
+                case 'password': feedbackItem = document.getElementById('fb-password'); break;
+                case 'role': feedbackItem = document.getElementById('fb-role'); break;
+                case 'remember': feedbackItem = document.getElementById('fb-remember'); break;
+                case 'captcha': feedbackItem = document.getElementById('fb-captcha'); break;
+            }
+            if (feedbackItem) {
+                feedbackItem.querySelector('.status-text').innerText = message;
+                feedbackItem.querySelector('.status-text').style.color = color;
+            }
+        }
+
+        // Generate captcha on page load
+        window.onload = generateCaptcha;
+    </script>
+    ")
+}
+
+<!-- Styles -->
+<style>
+    .frame-container {
+        background: url('/pictures/frame.png') no-repeat center;
+        background-size: contain;
+        border-radius: 12px;
+        width: 280px;
+        height: 500px;
+        margin: auto;
+        padding: 20px;
+    }
+    .status-text {
+        font-weight: bold;
+        color: black; /* default */
+    }
+    #feedbackList {
+        width: 85%;
+        max-width: 300px;
+        margin: auto;
+        border: none;
+        margin-top: 180px;
+    }
+    #feedbackList .list-group-item {
+        border: none;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+</style>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />

@@ -1,0 +1,231 @@
+﻿@{
+    ViewData["Title"] = "Manage Students";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-primary mb-4">👩‍🎓 Manage Students</h2>
+    <a href="/Admin/AddStudent" class="btn btn-success mb-4">➕ Add Student</a>
+
+    <!-- Student Table -->
+    <div class="table-responsive shadow rounded mb-5">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Enrollment No</th>
+                    <th>Contact</th>
+                    <th>DOB</th>
+                    <th>Course</th>
+                    <th>Stream</th>
+                    <th>Session Year</th>
+                    <th>Address</th>
+                    <th>Admission Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Static Data -->
+                <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td>Male</td>
+                    <td>20250123</td>
+                    <td>9876543210</td>
+                    <td>2004-03-12</td>
+                    <td>B.Tech (4 Y)</td>
+                    <td>Computer Science & Engineering</td>
+                    <td>2025-2029</td>
+                    <td>New Delhi</td>
+                    <td>Direct</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="#">Edit</a>
+                        <a class="btn btn-sm btn-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add / Edit Student Form -->
+    <div class="card shadow-lg p-4 mb-5">
+        <h4 class="text-primary mb-3">📝 Add / Edit Student</h4>
+        <form>
+            <div class="row g-3">
+                <!-- Full Name -->
+                <div class="col-md-6">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" placeholder="Enter full name" required />
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter email address" required />
+                </div>
+
+                <!-- Gender -->
+                <div class="col-md-6">
+                    <label class="form-label">Gender</label><br />
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required />
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" />
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="other" value="Other" />
+                        <label class="form-check-label" for="other">Other</label>
+                    </div>
+                </div>
+
+                <!-- Enrollment Number -->
+                <div class="col-md-6">
+                    <label class="form-label">Enrollment Number</label>
+                    <input type="number"
+                           class="form-control"
+                           placeholder="Enter 9-digit enrollment number"
+                           required
+                           oninput="if(this.value.length > 9) this.value = this.value.slice(0,9);"
+                           pattern="\d{9}"
+                           title="Please enter exactly 9 digits" />
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-6">
+                    <label class="form-label">Contact Number</label>
+                    <input type="tel" class="form-control" maxlength="10" placeholder="Enter contact number" required />
+                </div>
+
+                <!-- DOB -->
+                <div class="col-md-6">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" required />
+                </div>
+
+                <!-- Session Year -->
+                <div class="col-md-6">
+                    <label class="form-label">Session Year</label>
+                    <input type="text" class="form-control" placeholder="e.g. 2025-2029" required />
+                </div>
+
+                <!-- Course -->
+                <div class="col-md-6">
+                    <label class="form-label">Course</label>
+                    <select id="course" class="form-select" required>
+                        <option value="">-- Select Course --</option>
+                        <option value="B.Tech (4 Y)">B.Tech (4 Y)</option>
+                        <option value="Management (3 Y)">Management (3 Y)</option>
+                        <option value="LAW (5 Y)">LAW (5 Y)</option>
+                        <option value="Science (3 Y)">Science (3 Y)</option>
+                        <option value="Arts (3 Y)">Arts (3 Y)</option>
+                        <option value="Nurshing (3/4 Y)">Nurshing (3/4 Y)</option>
+                    </select>
+                </div>
+
+                <!-- Stream -->
+                <div class="col-md-6">
+                    <label class="form-label">Stream</label>
+                    <select id="stream" class="form-select" required>
+                        <option value="">-- Select Stream --</option>
+                    </select>
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-12">
+                    <label class="form-label">Address</label>
+                    <textarea class="form-control" rows="2" placeholder="Enter full address" required></textarea>
+                </div>
+
+                <!-- Admission Type -->
+                <div class="col-md-12">
+                    <label class="form-label">Admission Type</label><br />
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="direct" value="Direct" required />
+                        <label class="form-check-label" for="direct">Direct</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="jee" value="JEE Mains" />
+                        <label class="form-check-label" for="jee">JEE Mains</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="sb" value="State Board" />
+                        <label class="form-check-label" for="sb">State Board / CBSE</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="cat" value="CAT" />
+                        <label class="form-check-label" for="cat">CAT</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="cuet" value="CUET-UG" />
+                        <label class="form-check-label" for="cuet">CUET-UG</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="neet" value="NEET-UG" />
+                        <label class="form-check-label" for="neet">NEET-UG</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="nata" value="NATA" />
+                        <label class="form-check-label" for="nata">NATA</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="admissionType" id="clat" value="CLAT" />
+                        <label class="form-check-label" for="clat">CLAT</label>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="col-12 text-end mt-3">
+                    <button type="submit" class="btn btn-primary px-4">Save Student</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("course").addEventListener("change", function () {
+            const streamDropdown = document.getElementById("stream");
+            const course = this.value;
+            let options = [];
+
+            if (course === "B.Tech (4 Y)") {
+                options = [
+                    "Computer Engineering",
+                    "Computer Science & Engineering Artificial Intelligence",
+                    "Information Technology",
+                    "Electrical Engineering",
+                    "Chemical Engineering",
+                    "Civil Engineering",
+                    "Mechanical Engineering",
+                    "Bioinformatics"
+                ];
+            } else if (course === "Management (3 Y)") {
+                options = ["BBA", "B.Com", "BBA (Digital Marketing)"];
+            } else if (course === "LAW (5 Y)") {
+                options = ["BCom LLB", "BA LLB"];
+            } else if (course === "Science (3 Y)") {
+                options = ["Physics", "Chemistry", "Biology", "Mathematics", "Microbiology"];
+            } else if (course === "Arts (3 Y)") {
+                options = ["History", "Political Science", "Sociology", "English Literature"];
+            } else if (course === "Nurshing (3/4 Y)") {
+                options = ["General Nursing And Midwifery", "B.Sc Nursing"];
+            }
+
+            // Clear and repopulate stream options
+            streamDropdown.innerHTML = '<option value="">-- Select Stream --</option>';
+            options.forEach(opt => {
+                const optionElement = document.createElement("option");
+                optionElement.value = opt;
+                optionElement.textContent = opt;
+                streamDropdown.appendChild(optionElement);
+            });
+        });
+    </script>
+}

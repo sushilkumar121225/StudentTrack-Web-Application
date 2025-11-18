@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Manage Subjects";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold text-info mb-4">📚 Subjects</h2>
+
+    <hr class="my-4">
+
+    <h4 class="mb-3">➕ Add / Edit Subject</h4>
+    <form id="subjectForm" class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Subject Name</label>
+            <input type="text" class="form-control" id="subjectName" required>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Code</label>
+            <input type="text" class="form-control" id="subjectCode" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Course</label>
+            <select class="form-select" id="courseSelect" required>
+                <option value="">Select Course</option>
+                <option>B.Tech</option>
+                <option>Management</option>
+                <option>Law</option>
+                <option>Science</option>
+                <option>Arts</option>
+                <option>Nursing</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Semester</label>
+            <select class="form-select" id="semesterSelect" required>
+                <option value="">Select Semester</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Description</label>
+            <input type="text" class="form-control" id="subjectDescription">
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary">Add Subject</button>
+        </div>
+    </form>
+
+    <hr class="my-5">
+
+    <h3 class="fw-bold text-secondary mb-4">🗂 Subjects by Course & Semester</h3>
+
+    <div id="subjectsContainer">
+        <!-- Dynamic Course & Semester containers will appear here -->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const subjectForm = document.getElementById("subjectForm");
+        const subjectsContainer = document.getElementById("subjectsContainer");
+
+        const subjectsData = {};
+
+        subjectForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById("subjectName").value;
+            const code = document.getElementById("subjectCode").value;
+            const course = document.getElementById("courseSelect").value;
+            const semester = document.getElementById("semesterSelect").value;
+            const description = document.getElementById("subjectDescription").value;
+
+            if (!subjectsData[course]) subjectsData[course] = {};
+            if (!subjectsData[course][semester]) subjectsData[course][semester] = [];
+
+            subjectsData[course][semester].push({ name, code, description });
+
+            renderSubjects();
+            subjectForm.reset();
+        });
+
+        function renderSubjects() {
+            subjectsContainer.innerHTML = "";
+
+            for (const course in subjectsData) {
+                const courseDiv = document.createElement("div");
+                courseDiv.classList.add("mb-5");
+
+                const courseTitle = document.createElement("h4");
+                courseTitle.textContent = `📘 ${course}`;
+                courseTitle.classList.add("text-primary", "mb-3");
+                courseDiv.appendChild(courseTitle);
+
+                for (const semester in subjectsData[course]) {
+                    const semDiv = document.createElement("div");
+                    semDiv.classList.add("mb-3");
+
+                    const semTitle = document.createElement("h5");
+                    semTitle.textContent = `Semester ${semester}`;
+                    semTitle.classList.add("text-success", "mb-2");
+                    semDiv.appendChild(semTitle);
+
+                    const table = document.createElement("table");
+                    table.classList.add("table", "table-striped", "table-hover", "shadow", "rounded");
+
+                    const thead = document.createElement("thead");
+                    thead.classList.add("table-secondary");
+                    thead.innerHTML = `
+                        <tr>
+                            <th>ID</th>
+                            <th>Subject Name</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                        </tr>
+                    `;
+                    table.appendChild(thead);
+
+                    const tbody = document.createElement("tbody");
+
+                    subjectsData[course][semester].forEach((sub, index) => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${sub.name}</td>
+                            <td>${sub.code}</td>
+                            <td>${sub.description}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+
+                    table.appendChild(tbody);
+                    semDiv.appendChild(table);
+                    courseDiv.appendChild(semDiv);
+                }
+
+                subjectsContainer.appendChild(courseDiv);
+            }
+        }
+    </script>
+}
