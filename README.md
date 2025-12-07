@@ -1,4 +1,4 @@
-#🎓 StudentTrack – Role-Based Student Information System
+# 🎓StudentTrack – Role-Based Student Information System
 
 A secure and centralized Student & Teacher Information Management System built using ASP.NET Web Forms, C#, and SQL Server.
 StudentTrack enables educational institutions to manage academic records digitally with clear role-based privileges for Admin, Teacher, and Student.
