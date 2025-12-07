@@ -117,11 +117,6 @@ Student Profile View
 
 ▶️ How to Run the Project
 
-Clone the repository
-
-git clone https://github.com/yourusername/StudentTrack.git
-
-
 Open the .sln file in Visual Studio
 
 Import the SQL database:
@@ -161,7 +156,7 @@ Feel free to fork the project, open issues, or submit pull requests with improve
 📌 Developer: Sushil Kumar
 🔗 GitHub: https://github.com/sushilkumar121225
 
-💼 LinkedIn: (Add your link here)
+💼 LinkedIn: https://www.linkedin.com/in/sushil-kumar-471614289/
 
 ⭐ If you like this project, don’t forget to Star the repository!
 
