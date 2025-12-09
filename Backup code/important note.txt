@@ -1,20 +1,11 @@
-Admin login ID: AD1020
-Password: Adminsk1050 (for test)
-admin email: admin@studenttrack.local
 
-TeacherId Example: sk@teacher.com
-Password: 123456
-Student id: as email
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-													.NET project: "StudentTrack – Student Information System"
+													.NET project: "StudentTrack â€“ Student Information System"
 
 suitable for academic, demo, or real-world use.
 
 ? Project Title:
 
-StudentTrack – Student Information System
+StudentTrack â€“ Student Information System
 
 ?? Project Description:
 "StudentTrack" is a web-based application developed using ASP.NET and SQL Server that allows schools 
@@ -74,13 +65,13 @@ Reporting (optional)
 Crystal Reports or RDLC
 
 ??? Database Tables (Sample):
-Students – StudentID, Name, DOB, Gender, Address, ClassID, Photo
-Classes – ClassID, ClassName
-Subjects – SubjectID, SubjectName, ClassID
-Marks – MarkID, StudentID, SubjectID, Marks
-Attendance – AttendanceID, StudentID, Date, Status
-Users – UserID, Username, Password, Role
-Fees – FeeID, StudentID, Amount, PaidDate
+Students â€“ StudentID, Name, DOB, Gender, Address, ClassID, Photo
+Classes â€“ ClassID, ClassName
+Subjects â€“ SubjectID, SubjectName, ClassID
+Marks â€“ MarkID, StudentID, SubjectID, Marks
+Attendance â€“ AttendanceID, StudentID, Date, Status
+Users â€“ UserID, Username, Password, Role
+Fees â€“ FeeID, StudentID, Amount, PaidDate
 
 ?? Key Features:
 Role-based access control
